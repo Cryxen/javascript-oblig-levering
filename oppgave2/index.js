@@ -36,36 +36,32 @@ const main = () => {
   createTableUI(users);
 };
 
-const filter = () => {
-  if (nameField.value.length > 0 && ageField.value.length > 0) {
+nameField.addEventListener('keypress', (e) => {
+  let keysPressed = e.target.value
+  console.log(e.target.value)
+  if (nameField.value.length > 0) {
     userUl.innerHTML = `<li><span>Id</span><span>Navn</span><span>Alder</span></li>`;
-    if (nameField.value.length > 0) {
+    for (const user of users) {
+      if (user.name.includes(nameField.value)) {
+        userUl.innerHTML += `<li><span>${user.id}</span><span>${user.name}</span><span>${user.age}</span></li>`;
+      }
+    }
+  }
+  else createTableUI(users);
+})
+
+
+const filter = () => {
+  if (ageField.value.length > 0) {
+  userUl.innerHTML = `<li><span>Id</span><span>Navn</span><span>Alder</span></li>`;
       for (const user of users) {
-        if (user.name.toUpperCase() == nameField.value.toUpperCase()) {
+        if (ageField.value == user.age && user.name.includes(nameField.value)) {
           userUl.innerHTML += `<li><span>${user.id}</span><span>${user.name}</span><span>${user.age}</span></li>`;
         }
       }
     }
   }
-  else if (ageField.value.length > 0) {
-    userUl.innerHTML = `<li><span>Id</span><span>Navn</span><span>Alder</span></li>`;
-    for (const user of users) {
-      if (user.age == ageField.value) {
-        userUl.innerHTML += `<li><span>${user.id}</span><span>${user.name}</span><span>${user.age}</span></li>`;
-      }
-    }
-  }
-  else if (nameField.value.length > 0) {
-    userUl.innerHTML = `<li><span>Id</span><span>Navn</span><span>Alder</span></li>`;
-    for (const user of users) {
-      if (user.name.toUpperCase() == nameField.value.toUpperCase()) {
-        userUl.innerHTML += `<li><span>${user.id}</span><span>${user.name}</span><span>${user.age}</span></li>`;
-      }
-    }
-  }
 
-  else createTableUI(users)
 
-}
 filterBtn.addEventListener('click', () => filter())
 main();
